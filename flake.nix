@@ -4,26 +4,37 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # poetry.url = "github:nix-community/poetry2nix";
     flake-utils.url = "github:numtide/flake-utils";
-    mptcpanalyzer.url = "github:teto/mptcpanalyzer";
+    mptcpanalyzer-python.url = "github:teto/mptcpanalyzer";
+    # mptcpanalyzer-haskell.url = "github:teto/quantum";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: let
-  in flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      mptcpanalyzer = pkgs.callPackage ./contrib/default.nix {};
+  outputs = inputs@{ self, nixpkgs, flake-utils, ... }: let
+  in flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
+      # pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        # overlays = pkgs.lib.attrValues (self.overlays);
+        config = { allowUnfree = true; allowBroken = true; };
+      };
+
+      # mptcpanalyzer-python = pkgs.callPackage ./contrib/default.nix {};
     in rec {
 
-      packages = {
+      packages = inputs.mptcpanalyzer-python.packages."${system}";
+      # // {
+        # TODO
         # mptcpanalyzer = mptcpanalyzer;
+        # mptcp-pm =
+        # inherit (self) linux_mptcp_95;
+      # };
 
-        # mptcp-pm = 
+      defaultPackage = inputs.mptcpanalyzer-python.packages."${system}".mptcpanalyzer;
+    })
+    // {
 
+      nixosModules = {
+        mptcp = (import ./modules/mptcp);
       };
-    }) // {
-
-      nixosModules = [
-        (import ./modules/mptcp)
-      ];
 
       overlay = final: prev: {
         linux_mptcp_95 = final.callPackage ./pkgs/linux-mptcp/95.nix {
