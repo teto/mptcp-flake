@@ -13,20 +13,19 @@
       # pkgs = nixpkgs.legacyPackages.${system};
       pkgs = import nixpkgs {
         inherit system;
-        # overlays = pkgs.lib.attrValues (self.overlays);
+        overlays = [ self.overlay ];
         config = { allowUnfree = true; allowBroken = true; };
       };
 
       # mptcpanalyzer-python = pkgs.callPackage ./contrib/default.nix {};
     in rec {
 
-      packages = inputs.mptcpanalyzer-python.packages."${system}";
-      # // {
+      packages = inputs.mptcpanalyzer-python.packages."${system}" // {
         # TODO
         # mptcpanalyzer = mptcpanalyzer;
         # mptcp-pm =
-        # inherit (self) linux_mptcp_95;
-      # };
+        inherit (pkgs) linux_mptcp_95;
+      };
 
       defaultPackage = inputs.mptcpanalyzer-python.packages."${system}".mptcpanalyzer;
     })
