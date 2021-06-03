@@ -17,9 +17,9 @@ in
 
     package = mkOption {
       type = types.package;
-      default = pkgs.linux_mptcp;
+      default = pkgs.linux_mptcp_95;
       description = ''
-        Default mptcp kernel to use.
+        Default mptcp kernel to use. For now the module works only with the out-of-tree module.
       '';
     };
 
