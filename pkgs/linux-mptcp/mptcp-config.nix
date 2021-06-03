@@ -1,28 +1,35 @@
 { lib }:
 with lib.kernel;
 {
-    # DRM_AMDGPU = yes;
+  # unrelated
+  DRM_AMDGPU = no;
+  XEN = lib.mkForce no;
+  DRM_AMDGPU_CIK = lib.mkForce no;
+  DRM_AMDGPU_SI = lib.mkForce no;
+  DRM_AMD_DC_DCN1_0 = lib.mkForce no;
 
-    IPV6               = yes;
-    MPTCP              = yes;
-    IP_MULTIPLE_TABLES = yes;
+  # MPTCP-specific
 
-    # Enable advanced path-managers...
-    MPTCP_PM_ADVANCED = yes;
-    MPTCP_FULLMESH = yes;
-    MPTCP_NDIFFPORTS = yes;
-    # ... but use none by default.
-    # The default is safer if source policy routing is not setup.
-    DEFAULT_DUMMY = yes;
-    DEFAULT_MPTCP_PM.freeform = "default";
+  IPV6               = yes;
+  MPTCP              = yes;
+  IP_MULTIPLE_TABLES = yes;
 
-    # MPTCP scheduler selection.
-    MPTCP_SCHED_ADVANCED = yes;
-    DEFAULT_MPTCP_SCHED.freeform = "default";
+  # Enable advanced path-managers...
+  MPTCP_PM_ADVANCED = yes;
+  MPTCP_FULLMESH = yes;
+  MPTCP_NDIFFPORTS = yes;
+  # ... but use none by default.
+  # The default is safer if source policy routing is not setup.
+  DEFAULT_DUMMY = yes;
+  DEFAULT_MPTCP_PM.freeform = "default";
 
-    # Smarter TCP congestion controllers
-    TCP_CONG_LIA = module;
-    TCP_CONG_OLIA = module;
-    TCP_CONG_WVEGAS = module;
-    TCP_CONG_BALIA = module;
+  # MPTCP scheduler selection.
+  MPTCP_SCHED_ADVANCED = yes;
+  DEFAULT_MPTCP_SCHED.freeform = "default";
+
+  # Smarter TCP congestion controllers
+  TCP_CONG_LIA = module;
+  TCP_CONG_OLIA = module;
+  TCP_CONG_WVEGAS = module;
+  TCP_CONG_BALIA = module;
 }

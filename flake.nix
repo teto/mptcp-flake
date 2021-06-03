@@ -28,6 +28,8 @@
       };
 
       defaultPackage = inputs.mptcpanalyzer-python.packages."${system}".mptcpanalyzer;
+
+      # checks = 
     })
     // {
 

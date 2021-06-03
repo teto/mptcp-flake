@@ -6,6 +6,7 @@ in
 buildLinux ({
   version = "${modDirVersion}-mptcp_v${mptcpVersion}";
   inherit modDirVersion;
+  ignoreConfigErrors = true;
 
   extraMeta = {
     branch = "4.19";
