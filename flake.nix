@@ -1,12 +1,12 @@
 {
-  description = "A very basic flake";
+  description = "Multipath TCP related software";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # poetry.url = "github:nix-community/poetry2nix";
     flake-utils.url = "github:numtide/flake-utils";
     mptcpanalyzer-python.url = "github:teto/mptcpanalyzer";
     mptcp-pm.url = "github:teto/mptcp-pm";
-    # mptcpanalyzer-haskell.url = "github:teto/quantum";
+    mptcpanalyzer-haskell.url = "github:teto/quantum";
   };
 
   outputs = inputs@{ self, nixpkgs, flake-utils, ... }: let
