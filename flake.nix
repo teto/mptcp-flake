@@ -23,7 +23,8 @@
       packages = {
         mptcpanalyzer = inputs.mptcpanalyzer-python.packages."${system}".mptcpanalyzer;
         # TODO fix
-        mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
+        # mptcpanalyzer = mptcpanalyzer-haskell
+        # mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
         mptcptrace = pkgs.callPackage ./pkgs/mptcptrace {};
         mptcpplot = pkgs.callPackage ./pkgs/mptcpplot {};
         iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};

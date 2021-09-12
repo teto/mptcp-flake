@@ -352,11 +352,11 @@
         "replica": "replica"
       },
       "locked": {
-        "lastModified": 1626041321,
-        "narHash": "sha256-/wU306upQx0D31gcetE4iFPjfUU3/77PPvyjBm2OVzk=",
+        "lastModified": 1631143336,
+        "narHash": "sha256-4FBkDNWXu1VeLWksS/0jx1HOPQJdq/oiIwVvaSFMglQ=",
         "owner": "teto",
         "repo": "quantum",
-        "rev": "618df3904298a8a304b33613e1ffc44352ae0a8d",
+        "rev": "222804a557eb1a17d014bc1a0d6a8fda396c42e3",
         "type": "github"
       },
       "original": {
@@ -560,11 +560,11 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1630850248,
-        "narHash": "sha256-OzJi6Olf7mSVhGt3W7qOMVP5Qk1lH60zlHeCcITzfv0=",
+        "lastModified": 1631381596,
+        "narHash": "sha256-Xk91RO0uMyul8fWo3RP7WqEP5bsKUVucJRgLZgascAo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "23d5823337f4502dfa17e192d8c53a47cabcb6b4",
+        "rev": "f6e9e908ccbcabb365cb5434a4a38dd8c996fc72",
         "type": "github"
       },
       "original": {
