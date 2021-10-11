@@ -29,6 +29,9 @@
         mptcpplot = pkgs.callPackage ./pkgs/mptcpplot {};
         iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};
 
+        mptcpnumerics = pkgs.python3Packages.callPackage ./mptcpnumerics.nix {};
+
+
         inherit (pkgs) linux_mptcp_95;
       };
 
