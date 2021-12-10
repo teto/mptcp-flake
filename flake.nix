@@ -27,7 +27,7 @@
         iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};
 
 
-        inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace;
+        inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp;
       };
 
       defaultPackage = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
@@ -51,6 +51,18 @@
         mptcpplot = final.callPackage ./pkgs/mptcpplot {};
 
         mptcpnumerics = final.python3Packages.callPackage ./mptcpnumerics.nix {};
+
+        iperf3-mptcp = final.iperf3.overrideAttrs(oa: {
+
+          src = final.fetchFromGitHub {
+
+            owner = "pabeni";
+            repo = "iperf";
+            rev = "26b066b9d4e92442d55950689dbd9fd101b429a7";
+            sha256 = "sha256-Z2i93sRVp8KgNPY58Mme3MfYx8QdhcQZ/Z95TWl6nMc=";
+
+          };
+        });
       };
 
     };
