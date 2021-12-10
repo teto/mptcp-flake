@@ -50,7 +50,7 @@
         mptcptrace = final.callPackage ./pkgs/mptcptrace {};
         mptcpplot = final.callPackage ./pkgs/mptcpplot {};
 
-        mptcpnumerics = final.python3Packages.callPackage ./mptcpnumerics.nix {};
+        mptcpnumerics = final.python3Packages.callPackage ./pkgs/mptcpnumerics.nix {};
 
         iperf3-mptcp = final.iperf3.overrideAttrs(oa: {
 
