@@ -378,6 +378,23 @@
         "type": "github"
       }
     },
+    "linux-kernel-mptcp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1639432719,
+        "narHash": "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=",
+        "owner": "teto",
+        "repo": "linux",
+        "rev": "4e5027564537dfc77768dfda090cfb060b090551",
+        "type": "github"
+      },
+      "original": {
+        "owner": "teto",
+        "ref": "mptcp_95_enable_on_localhost",
+        "repo": "linux",
+        "type": "github"
+      }
+    },
     "mptcp-pm": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -788,6 +805,7 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "linux-kernel-mptcp": "linux-kernel-mptcp",
         "mptcp-pm": "mptcp-pm",
         "mptcpanalyzer-haskell": "mptcpanalyzer-haskell",
         "mptcpanalyzer-python": "mptcpanalyzer-python",
