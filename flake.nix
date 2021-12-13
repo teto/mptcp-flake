@@ -6,6 +6,10 @@
     mptcpanalyzer-python.url = "github:teto/mptcpanalyzer";
     mptcp-pm.url = "github:teto/mptcp-pm";
     mptcpanalyzer-haskell.url = "github:teto/quantum";
+    linux-kernel-mptcp = {
+      url = "github:teto/linux/mptcp_95_enable_on_localhost";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
@@ -28,6 +32,7 @@
 
 
         inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp;
+        inherit (pkgs) linux_mptcp_95-matt;
       };
 
       defaultPackage = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
@@ -44,6 +49,34 @@
           # kernelPatches = final.linux_4_19.kernelPatches;
         };
         mptcpd = final.callPackage ./pkgs/mptcpd {};
+
+        # my fork with several patches
+        # one of them enables mptcp on localhost
+        # 
+        linux_mptcp_95-matt = (prev.linux_mptcp_95.override( {
+          # src = self.inputs.linux-kernel-mptcp;
+          mptcpVersion = "0.96.0";
+          modDirVersion = "5.1.0";
+
+        })).overrideAttrs (oa: {
+        # linux_mptcp_95-matt = prev.buildLinux (rec {
+        #   version = "${modDirVersion}-mptcp_v${mptcpVersion}";
+        #   # autoModules= true;
+
+        #   extraMeta = {
+        #     branch = "5.1";
+        #   };
+
+          src = final.fetchFromGitHub {
+            owner = "teto";
+            repo = "linux";
+
+            rev = "4e5027564537dfc77768dfda090cfb060b090551"; # branch mptcp_95_enable_on_localhost
+            sha256 = "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=";
+          };
+          # modDirVersion 4.19.126 specified in the Nix expression is wrong, it should be: 
+        });
+
         linux_mptcp_95 = final.callPackage ./pkgs/linux-mptcp/95.nix {
           kernelPatches = final.linux_4_19.kernelPatches;
         };
