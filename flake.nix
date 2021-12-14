@@ -32,7 +32,7 @@
 
 
         inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp;
-        inherit (pkgs) linux_mptcp_95-matt;
+        inherit (pkgs) linux_mptcp_95-patched linux_mptcp_95-matt;
       };
 
       defaultPackage = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
@@ -52,8 +52,15 @@
 
         # my fork with several patches
         # one of them enables mptcp on localhost
-        # 
-        linux_mptcp_95-matt = (prev.linux_mptcp_95.override( {
+        linux_mptcp_95-patched = final.callPackage ./pkgs/linux-mptcp/patched.nix {
+
+          kernelPatches = [];
+        };
+
+        # doesn't seem to work, it triggers
+        # Failed assertions:
+        # - CONFIG_NET is not enabled!
+        linux_mptcp_95-matt = (final.linux_mptcp_95.override( {
           # src = self.inputs.linux-kernel-mptcp;
           mptcpVersion = "0.96.0";
           modDirVersion = "5.1.0";
