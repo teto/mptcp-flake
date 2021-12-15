@@ -53,7 +53,6 @@
         # my fork with several patches
         # one of them enables mptcp on localhost
         linux_mptcp_95-patched = final.callPackage ./pkgs/linux-mptcp/patched.nix {
-
           kernelPatches = [];
         };
 

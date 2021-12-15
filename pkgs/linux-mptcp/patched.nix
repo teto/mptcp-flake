@@ -17,8 +17,13 @@ buildLinux ({
     owner = "teto";
     repo = "linux";
 
-    rev = "4e5027564537dfc77768dfda090cfb060b090551"; # branch mptcp_95_enable_on_localhost
-    sha256 = "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=";
+    # branch mptcp_95_enable_on_localhost
+    # rev = "4e5027564537dfc77768dfda090cfb060b090551";
+    # sha256 = "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=";
+
+    # branch integrated_owd
+    rev = "ed9ff2cce2a6d0ab4226fe32e54621f2a9f5b91b";
+    sha256 = "sha256-CFfnIUPjUWePQgDkj5Bc7rHV13h9H0tXitAonoX8OQw=";
   };
 
   structuredExtraConfig = lib.mkMerge [
