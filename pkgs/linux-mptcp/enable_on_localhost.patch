@@ -1,0 +1,53 @@
+commit 5f9f87d9239cd8f5cde2910ba77d54503bf163fc
+Author: Matthieu Coudron <mattator@gmail.com>
+Date:   Tue Jan 29 18:42:53 2019 +0900
+
+    enable mptcp even on localhost
+
+diff --git a/net/mptcp/mptcp_ctrl.c b/net/mptcp/mptcp_ctrl.c
+index b0e52717f6d6..447fe977d888 100644
+--- a/net/mptcp/mptcp_ctrl.c
++++ b/net/mptcp/mptcp_ctrl.c
+@@ -2026,16 +2026,16 @@ bool mptcp_doit(struct sock *sk)
+ 	const struct dst_entry *dst = __sk_dst_get(sk);
+ 
+ 	/* Don't do mptcp over loopback */
+-	if (sk->sk_family == AF_INET &&
+-	    (ipv4_is_loopback(inet_sk(sk)->inet_daddr) ||
+-	     ipv4_is_loopback(inet_sk(sk)->inet_saddr)))
+-		return false;
+-#if IS_ENABLED(CONFIG_IPV6)
+-	if (sk->sk_family == AF_INET6 &&
+-	    (ipv6_addr_loopback(&sk->sk_v6_daddr) ||
+-	     ipv6_addr_loopback(&inet6_sk(sk)->saddr)))
+-		return false;
+-#endif
++	/* if (sk->sk_family == AF_INET && */
++	/*     (ipv4_is_loopback(inet_sk(sk)->inet_daddr) || */
++	/*      ipv4_is_loopback(inet_sk(sk)->inet_saddr))) */
++	/* 	return false; */
++/* #if IS_ENABLED(CONFIG_IPV6) */
++	/* if (sk->sk_family == AF_INET6 && */
++	/*     (ipv6_addr_loopback(&sk->sk_v6_daddr) || */
++	/*      ipv6_addr_loopback(&inet6_sk(sk)->saddr))) */
++	/* 	return false; */
++/* #endif */
+ 	if (mptcp_v6_is_v4_mapped(sk) &&
+ 	    ipv4_is_loopback(inet_sk(sk)->inet_saddr))
+ 		return false;
+diff --git a/net/mptcp/mptcp_fullmesh.c b/net/mptcp/mptcp_fullmesh.c
+index 7d114990e35b..b73d427a20e3 100644
+--- a/net/mptcp/mptcp_fullmesh.c
++++ b/net/mptcp/mptcp_fullmesh.c
+@@ -1077,8 +1077,9 @@ static void addr4_event_handler(const struct in_ifaddr *ifa, unsigned long event
+ 	struct mptcp_fm_ns *fm_ns = fm_get_ns(net);
+ 	struct mptcp_addr_event mpevent;
+ 
+-	if (ifa->ifa_scope > RT_SCOPE_LINK ||
+-	    ipv4_is_loopback(ifa->ifa_local))
++	if (ifa->ifa_scope > RT_SCOPE_LINK
++	    /* || ipv4_is_loopback(ifa->ifa_local) */
++		)
+ 		return;
+ 
+ 	spin_lock_bh(&fm_ns->local_lock);

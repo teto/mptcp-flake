@@ -31,7 +31,7 @@
         iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};
 
 
-        inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp;
+        inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
         inherit (pkgs) linux_mptcp_95-matt;
       };
 
@@ -45,8 +45,9 @@
       };
 
       overlay = final: prev: {
+        patch_enable_mptcp_on_localhost = { name = "enable_on_localhost"; patch = ./pkgs/linux-mptcp/enable_on_localhost.patch; };
         linux_mptcp_96 = final.callPackage ./pkgs/linux-mptcp/96.nix {
-          # kernelPatches = final.linux_4_19.kernelPatches;
+          kernelPatches = [ final.patch_enable_mptcp_on_localhost ];
         };
         mptcpd = final.callPackage ./pkgs/mptcpd {};
 
