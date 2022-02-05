@@ -16,15 +16,14 @@
 
 stdenv.mkDerivation rec {
   name = "mptcpd";
-  # version = "v0.8";
-  version = "unstable";
+  version = "0.9";
 
   # FATAL we need to keep a git repo
   src = fetchFromGitHub {
     owner = "intel";
     repo = "mptcpd";
-    rev = "504e8c59a55b5d813b6c568c5cbc2e529ff00cc8";
-    sha256 = "sha256-JiS9Y7cw8N7MLOI6kImZ/KOyNaZl431sUjOpUDmXyhE=";
+    rev = "v${version}";
+    sha256 = "sha256-L//Hh6W9vSxlokDwOsNIwH0UDCXMiQ3zMF1UUc+IZT4=";
   };
 
   preConfigure = ''
