@@ -1,7 +1,7 @@
 { lib, buildPackages, fetchFromGitHub, perl, buildLinux, structuredExtraConfig ? {}, ... } @ args:
 let
   mptcpVersion = "0.96";
-  modDirVersion = "5.4.155";
+  modDirVersion = "5.4.170";
 in
 buildLinux ({
   version = "${modDirVersion}-mptcp_v${mptcpVersion}";
@@ -16,8 +16,8 @@ buildLinux ({
   src = fetchFromGitHub {
     owner = "multipath-tcp";
     repo = "mptcp";
-    rev = "4967fef261f624db592f0e511d01b1b37082c122";
-    sha256 = "sha256-6O/UQhxcMrT6Xr3V5niJmVuFDy7COhgFKg60IvWle2U=";
+    rev = "6c1e3d3b8a6d1217dd05389ca1a7fb5bf5eca42a";
+    sha256 = "sha256-6O/UQhxcMrT6Xr3V5niJmVuFDy6COhgFKg60IvWle2U=";
   };
 
   structuredExtraConfig = lib.mkMerge [

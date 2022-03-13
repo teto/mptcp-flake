@@ -46,27 +46,21 @@
 
       overlay = final: prev: {
         patch_enable_mptcp_on_localhost = { name = "enable_on_localhost"; patch = ./pkgs/linux-mptcp/enable_on_localhost.patch; };
-        linux_mptcp_96 = final.callPackage ./pkgs/linux-mptcp/96.nix {
-          kernelPatches = [ final.patch_enable_mptcp_on_localhost ];
-        };
         mptcpd = final.callPackage ./pkgs/mptcpd {};
+
+        linux_mptcp_96 = final.callPackage ./pkgs/linux-mptcp/96.nix {
+          # final.patch_enable_mptcp_on_localhost
+          kernelPatches = [ ];
+        };
 
         # my fork with several patches
         # one of them enables mptcp on localhost
-        # 
         linux_mptcp_95-matt = (prev.linux_mptcp_95.override( {
           # src = self.inputs.linux-kernel-mptcp;
-          mptcpVersion = "0.96.0";
+          mptcpVersion = "0.95.2";
           modDirVersion = "5.1.0";
 
         })).overrideAttrs (oa: {
-        # linux_mptcp_95-matt = prev.buildLinux (rec {
-        #   version = "${modDirVersion}-mptcp_v${mptcpVersion}";
-        #   # autoModules= true;
-
-        #   extraMeta = {
-        #     branch = "5.1";
-        #   };
 
           src = final.fetchFromGitHub {
             owner = "teto";
