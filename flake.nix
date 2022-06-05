@@ -24,23 +24,24 @@
     in rec {
 
       packages = {
+        default = self.packages.${system}.mptcpanalyzer;
         mptcpanalyzer = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
+
         # TODO fix
         # mptcpanalyzer = mptcpanalyzer-haskell
         # mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
         iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};
 
 
+
         inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
-        inherit (pkgs) linux_mptcp_95-matt;
+        inherit (pkgs) linux_mptcp_95-matt protocol;
       };
-
-      defaultPackage = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
-
     })
     // {
 
-      nixosModules = {
+      nixosModules = rec {
+        default = mptcp;
         mptcp = (import ./modules/mptcp);
       };
 
@@ -75,8 +76,14 @@
         linux_mptcp_95 = final.callPackage ./pkgs/linux-mptcp/95.nix {
           kernelPatches = final.linux_4_19.kernelPatches;
         };
+
+        linux_mptcp_net_next = final.callPackage ./pkgs/linux-net-next.nix {
+        };
+
         mptcptrace = final.callPackage ./pkgs/mptcptrace {};
         mptcpplot = final.callPackage ./pkgs/mptcpplot {};
+
+        protocol = final.python3Packages.callPackage ./pkgs/protocol {};
 
         mptcpnumerics = final.python3Packages.callPackage ./pkgs/mptcpnumerics.nix {};
 
