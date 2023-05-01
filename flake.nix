@@ -3,9 +3,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    mptcpanalyzer-python.url = "github:teto/mptcpanalyzer";
+    mptcpanalyzer-python.url = "github:teto/pymptcpanalyzer";
     mptcp-pm.url = "github:teto/mptcp-pm";
-    mptcpanalyzer-haskell.url = "github:teto/quantum";
+    mptcpanalyzer-haskell.url = "github:teto/mptcpanalyzer";
     linux-kernel-mptcp = {
       url = "github:teto/linux/mptcp_95_enable_on_localhost";
       flake = false;
@@ -13,31 +13,32 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
+    flake-utils.lib.eachSystem [ "x86_64-linux" ]
+      (system:
+        let
 
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ self.overlay ];
-        config = { allowUnfree = true; allowBroken = true; };
-      };
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlay ];
+            config = { allowUnfree = true; allowBroken = true; };
+          };
 
-    in rec {
+        in
+        {
 
-      packages = {
-        default = self.packages.${system}.mptcpanalyzer;
-        mptcpanalyzer = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
+          packages = {
+            default = self.packages.${system}.mptcpanalyzer;
+            mptcpanalyzer = self.inputs.mptcpanalyzer-python.packages.${system}.mptcpanalyzer;
 
-        # TODO fix
-        # mptcpanalyzer = mptcpanalyzer-haskell
-        # mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
-        iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp {};
+            # TODO fix
+            # mptcpanalyzer = mptcpanalyzer-haskell
+            # mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
+            iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp { };
 
-
-
-        inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
-        inherit (pkgs) linux_mptcp_95-matt protocol;
-      };
-    })
+            inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
+            inherit (pkgs) linux_mptcp_95-matt protocol;
+          };
+        })
     // {
 
       nixosModules = rec {
@@ -45,9 +46,11 @@
         mptcp = (import ./modules/mptcp);
       };
 
-      overlay = final: prev: {
+      overlays.default = final: prev: {
+
+        net-tools = final.callPackage ./pkgs/net-tools { };
         patch_enable_mptcp_on_localhost = { name = "enable_on_localhost"; patch = ./pkgs/linux-mptcp/enable_on_localhost.patch; };
-        mptcpd = final.callPackage ./pkgs/mptcpd {};
+        mptcpd = final.callPackage ./pkgs/mptcpd { };
 
         linux_mptcp_96 = final.callPackage ./pkgs/linux-mptcp/96.nix {
           # final.patch_enable_mptcp_on_localhost
@@ -56,7 +59,7 @@
 
         # my fork with several patches
         # one of them enables mptcp on localhost
-        linux_mptcp_95-matt = (prev.linux_mptcp_95.override( {
+        linux_mptcp_95-matt = (prev.linux_mptcp_95.override ({
           # src = self.inputs.linux-kernel-mptcp;
           mptcpVersion = "0.95.2";
           modDirVersion = "5.1.0";
@@ -77,17 +80,16 @@
           kernelPatches = final.linux_4_19.kernelPatches;
         };
 
-        linux_mptcp_net_next = final.callPackage ./pkgs/linux-net-next.nix {
-        };
+        linux_mptcp_net_next = final.callPackage ./pkgs/linux-net-next.nix { };
 
-        mptcptrace = final.callPackage ./pkgs/mptcptrace {};
-        mptcpplot = final.callPackage ./pkgs/mptcpplot {};
+        mptcptrace = final.callPackage ./pkgs/mptcptrace { };
+        mptcpplot = final.callPackage ./pkgs/mptcpplot { };
 
-        protocol = final.python3Packages.callPackage ./pkgs/protocol {};
+        protocol = final.python3Packages.callPackage ./pkgs/protocol { };
 
-        mptcpnumerics = final.python3Packages.callPackage ./pkgs/mptcpnumerics.nix {};
+        mptcpnumerics = final.python3Packages.callPackage ./pkgs/mptcpnumerics.nix { };
 
-        iperf3-mptcp = final.iperf3.overrideAttrs(oa: {
+        iperf3-mptcp = final.iperf3.overrideAttrs (oa: {
 
           src = final.fetchFromGitHub {
 
