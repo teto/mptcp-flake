@@ -3,10 +3,9 @@
 , linux
 , libtool
 , fetchFromGitHub
-, pkgconfig
+, pkg-config
 , autoreconfHook
 , ell
-, check
 , openssl # for libcrypto
 , libpcap
 , doxygen
@@ -33,7 +32,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autoreconfHook
     autoconf-archive
-    pkgconfig
+    pkg-config
     # check
     ell # embedded linux library !
     linux.dev # for mptcp.h

@@ -1,14 +1,14 @@
 { stdenv
 , lib
 , fetchFromBitbucket
-, pkgconfig
+, pkg-config
 , autoreconfHook
 , check
 , openssl # for libcrypto
 , libpcap
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = "mptcptrace";
   version = "20180606";
 
@@ -28,11 +28,11 @@ stdenv.mkDerivation rec {
     # sha256 = "0ii78gna06gkkkw3qb774lfxxdh478ab8qligyglmiy6hxl4w00k";
   };
 
-  nativeBuildInputs = [ autoreconfHook pkgconfig check openssl libpcap ];
+  nativeBuildInputs = [ autoreconfHook pkg-config check openssl libpcap ];
 
   meta = with lib; {
 
-    homepage = https://bitbucket.org/bhesmans/mptcptrace.git;
+    homepage = "https://bitbucket.org/bhesmans/mptcptrace.git";
     description = "Analyze MPTCP traces";
     platforms = platforms.unix;
     license = licenses.gpl3;

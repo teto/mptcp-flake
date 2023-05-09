@@ -19,8 +19,12 @@
 
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlay ];
-            config = { allowUnfree = true; allowBroken = true; };
+            overlays = [ self.overlays.default ];
+            config = { 
+              allowUnfree = true;
+              allowBroken = true;
+              allowAliases = false;
+            };
           };
 
         in
@@ -48,9 +52,9 @@
 
       overlays.default = final: prev: {
 
-        net-tools = final.callPackage ./pkgs/net-tools { };
+        net-tools = prev.callPackage ./pkgs/net-tools { };
         patch_enable_mptcp_on_localhost = { name = "enable_on_localhost"; patch = ./pkgs/linux-mptcp/enable_on_localhost.patch; };
-        mptcpd = final.callPackage ./pkgs/mptcpd { };
+        mptcpd = prev.callPackage ./pkgs/mptcpd { };
 
         linux_mptcp_96 = final.callPackage ./pkgs/linux-mptcp/96.nix {
           # final.patch_enable_mptcp_on_localhost
@@ -59,7 +63,7 @@
 
         # my fork with several patches
         # one of them enables mptcp on localhost
-        linux_mptcp_95-matt = (prev.linux_mptcp_95.override ({
+        linux_mptcp_95-matt = (final.linux_mptcp_95.override ({
           # src = self.inputs.linux-kernel-mptcp;
           mptcpVersion = "0.95.2";
           modDirVersion = "5.1.0";

@@ -1,7 +1,7 @@
 { stdenv
 , lib
 , fetchFromGitHub
-, pkgconfig
+, pkg-config
 , openssl # for libcrypto
 , libpcap
 }:
@@ -32,11 +32,11 @@ stdenv.mkDerivation rec {
   installFlags = [ "PREFIX=$(out)" ];
 
   # autoreconfHook
-  nativeBuildInputs = [ pkgconfig openssl libpcap ];
+  nativeBuildInputs = [ pkg-config openssl libpcap ];
 
   meta = with lib; {
 
-    homepage = https://github.com/nasa/multipath-tcp-tools;
+    homepage = "https://github.com/nasa/multipath-tcp-tools";
     description = "Analyze MPTCP traces";
     platforms = platforms.unix;
     # NASA OPEN SOURCE AGREEMENT VERSION 1.3O
