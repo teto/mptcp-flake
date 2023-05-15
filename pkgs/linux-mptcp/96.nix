@@ -1,4 +1,4 @@
-{ lib, buildPackages, fetchFromGitHub, perl, buildLinux, structuredExtraConfig ? {}, ... } @ args:
+{ lib, fetchFromGitHub, buildLinux, structuredExtraConfig ? {}, ... } @ args:
 let
   mptcpVersion = "0.96";
   modDirVersion = "5.4.170";
