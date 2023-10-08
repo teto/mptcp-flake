@@ -39,8 +39,8 @@
             # mptcp-pm = inputs.mptcp-pm.packages."${system}".mptcp-pm;
             iproute-mptcp = pkgs.callPackage ./pkgs/iproute-mptcp { };
 
-            inherit (pkgs) linux_mptcp_95 mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
-            inherit (pkgs) linux_mptcp_95-matt protocol;
+            inherit (pkgs) mptcpd mptcpnumerics mptcpplot mptcptrace iperf3-mptcp linux_mptcp_96;
+            inherit (pkgs) protocol;
           };
         })
     // {
@@ -61,28 +61,27 @@
           kernelPatches = [ ];
         };
 
+        # TODO should be either updated or bound to an older nixpkgs
         # my fork with several patches
         # one of them enables mptcp on localhost
-        linux_mptcp_95-matt = (final.linux_mptcp_95.override ({
-          # src = self.inputs.linux-kernel-mptcp;
-          mptcpVersion = "0.95.2";
-          modDirVersion = "5.1.0";
+        # linux_mptcp_95-matt = (final.linux_mptcp_95.override ({
+        #   # src = self.inputs.linux-kernel-mptcp;
+        #   mptcpVersion = "0.95.2";
+        #   modDirVersion = "5.1.0";
+        # })).overrideAttrs (oa: {
+        #   src = final.fetchFromGitHub {
+        #     owner = "teto";
+        #     repo = "linux";
 
-        })).overrideAttrs (oa: {
+        #     rev = "4e5027564537dfc77768dfda090cfb060b090551"; # branch mptcp_95_enable_on_localhost
+        #     sha256 = "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=";
+        #   };
+        #   # modDirVersion 4.19.126 specified in the Nix expression is wrong, it should be: 
+        # });
 
-          src = final.fetchFromGitHub {
-            owner = "teto";
-            repo = "linux";
-
-            rev = "4e5027564537dfc77768dfda090cfb060b090551"; # branch mptcp_95_enable_on_localhost
-            sha256 = "sha256-sKgRTTmetM4EFuiKEU8mD+yJuI/PwV62HqaMSKInXvw=";
-          };
-          # modDirVersion 4.19.126 specified in the Nix expression is wrong, it should be: 
-        });
-
-        linux_mptcp_95 = final.callPackage ./pkgs/linux-mptcp/95.nix {
-          kernelPatches = final.linux_4_19.kernelPatches;
-        };
+        # linux_mptcp_95 = final.callPackage ./pkgs/linux-mptcp/95.nix {
+        #   kernelPatches = final.linux_4_19.kernelPatches;
+        # };
 
         linux_mptcp_net_next = final.callPackage ./pkgs/linux-net-next.nix { };
 
