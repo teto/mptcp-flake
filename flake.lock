@@ -69,11 +69,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1681202837,
-        "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
+        "lastModified": 1694529238,
+        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "cfacdce06f30d2b68473a46042957675eebb3401",
+        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
         "type": "github"
       },
       "original": {
@@ -414,11 +414,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1633982549,
-        "narHash": "sha256-qG3sfy6ljONICCQ0M8LBTIfewS3loCC/UUtns3r6B8o=",
+        "lastModified": 1696792409,
+        "narHash": "sha256-u+jcbKCT677Kh2HzrXhfU0hUdrSqaRas5QvOXZqVjpg=",
         "owner": "teto",
         "repo": "pymptcpanalyzer",
-        "rev": "bd57dc36ed31bcb797f7b4ab60fb1f852b0961a0",
+        "rev": "685193eb995bc7ffdf1a6d6ecc5cbad691abb0e5",
         "type": "github"
       },
       "original": {
@@ -461,11 +461,11 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1682879489,
-        "narHash": "sha256-sASwo8gBt7JDnOOstnps90K1wxmVfyhsTPPNTGBPjjg=",
+        "lastModified": 1696604326,
+        "narHash": "sha256-YXUNI0kLEcI5g8lqGMb0nh67fY9f2YoJsILafh6zlMo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "da45bf6ec7bbcc5d1e14d3795c025199f28e0de0",
+        "rev": "87828a0e03d1418e848d3dd3f3014a632e4a4f64",
         "type": "github"
       },
       "original": {
